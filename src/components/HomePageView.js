@@ -1,11 +1,17 @@
 import { useContext } from "react";
 import { userContext } from "../App";
+import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const HomePageView = () => {
-  const { productColName, orderColName } = useContext(userContext);
+  const { authorized, productColName, orderColName } = useContext(userContext);
+  if (authorized === false) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
+      <Navbar />
       <div className="homePage" style={{ marginTop: "5rem" }}>
         <h3>Products</h3>
         <table cellSpacing="0" id="customers">

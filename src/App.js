@@ -49,7 +49,6 @@ function App() {
         <header></header>
         <body className="App-body">
           <Router>
-            <Navbar />
             <Routes>
               <Route exact path="" element={<LoginPageView />} />
               <Route exact path="/home" element={<HomePageView />} />

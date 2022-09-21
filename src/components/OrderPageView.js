@@ -1,11 +1,18 @@
 import { useContext } from "react";
 import { userContext } from "../App";
+import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const OrderPageView = () => {
-  const { searchItem, setSearchItem, orderColName } = useContext(userContext);
+  const { authorized, searchItem, setSearchItem, orderColName } =
+    useContext(userContext);
+  if (authorized === false) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
+      <Navbar />
       <div className="productPage" style={{ marginTop: "5rem" }}>
         <input
           type="text"

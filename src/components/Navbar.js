@@ -15,7 +15,7 @@ const Navbar = () => {
       <NavLink to="/products">Product</NavLink>
       <NavLink to="/orders">Order</NavLink>
       <NavLink to="/cart">Cart</NavLink>
-      <NavLink to="/login">{isLogin ? "Logout" : "Login"}</NavLink>
+      <NavLink to="/login">Logout</NavLink>
     </nav>
   );
 };
