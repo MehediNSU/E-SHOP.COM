@@ -171,6 +171,49 @@ a:-webkit-any-link:hover {
   background-color: rgb(206, 203, 203);
 }
 
+.addProduct {
+  margin: 2rem 15rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 2rem 2rem;
+  background-color: var(--dark-mode2);
+  display: flex;
+  flex-direction: column;
+  font-size: 1.3rem;
+  height: 40%;
+  width: 55%;
+}
+
+.addProductDiv {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 1rem;
+}
+
+.addProductInput {
+  padding: 0 1rem;
+  font-size: 1rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+}
+
+.addProduct button {
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  border-radius: 0.3rem;
+  margin: 1.5rem 2rem;
+  height: 2rem;
+  width: 40% !important;
+  cursor: pointer;
+}
+
+.addProduct button:hover {
+  background-color: rgb(64, 64, 255);
+  color: var(--font-color);
+  transition-duration: 300ms;
+}
+
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;

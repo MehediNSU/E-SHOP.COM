@@ -1,10 +1,13 @@
 import { useContext } from "react";
-import { userContext } from "../App";
 import { Navigate } from "react-router-dom";
+
+import { userContext } from "../App";
 import Navbar from "./Navbar";
 
 const HomePageView = () => {
-  const { authorized, productColName, orderColName } = useContext(userContext);
+  const { authorized, productColName, orderColName, productsList, ordersList } =
+    useContext(userContext);
+
   if (authorized === false) {
     return <Navigate to="/login" />;
   }
@@ -12,8 +15,8 @@ const HomePageView = () => {
   return (
     <div>
       <Navbar />
-      <div className="homePage" style={{ marginTop: "5rem" }}>
-        <h3>Products</h3>
+      <div className="" style={{ marginTop: "5rem" }}>
+        <h3 style={{ marginLeft: "5rem" }}>Products</h3>
         <table cellSpacing="0" id="customers">
           <thead>
             <tr>
@@ -22,10 +25,21 @@ const HomePageView = () => {
               })}
             </tr>
           </thead>
+          <tbody>
+            {productsList.map((item) => {
+              return (
+                <tr>
+                  {Object.values(item).map((obj, index) => {
+                    return <td key={index}>{obj}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
-      <div className="homePage">
-        <h3>Orders</h3>
+      <div className="">
+        <h3 style={{ marginLeft: "5rem" }}>Orders</h3>
         <table cellSpacing="0" id="customers">
           <thead>
             <tr>
@@ -34,6 +48,17 @@ const HomePageView = () => {
               })}
             </tr>
           </thead>
+          <tbody>
+            {ordersList.map((item) => {
+              return (
+                <tr>
+                  {Object.values(item).map((obj, index) => {
+                    return <td key={index}>{obj}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     </div>
