@@ -8,6 +8,7 @@ import HomePageView from "./components/HomePageView";
 import LoginPageView from "./components/LoginPageView";
 import OrderPageView from "./components/OrderPageView";
 import ProductPageView from "./components/ProductPageView";
+import CartPageView from "./components/CartPageView";
 
 export const userContext = createContext();
 
@@ -114,6 +115,7 @@ function App() {
               <Route path="/products" element={<ProductPageView />} />
               <Route path="/orders" element={<OrderPageView />} />
               <Route path="/login" element={<LoginPageView />} />
+              <Route path="/cart" element={<CartPageView />} />
               <Route path="/add/product" element={<AddProduct />} />
               <Route path="/edit/product/" element={<AddProduct />} />
               <Route path="/add/order" element={<AddOrder />} />

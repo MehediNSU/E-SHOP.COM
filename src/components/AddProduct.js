@@ -50,8 +50,8 @@ const AddProduct = () => {
               name: "",
               category: "",
               arrivalDate: "",
-              inStock: 0,
-              price: 0,
+              inStock: "",
+              price: "",
             });
           }
           return item;
@@ -69,8 +69,8 @@ const AddProduct = () => {
         name: "",
         category: "",
         arrivalDate: "",
-        inStock: 0,
-        price: 0,
+        inStock: "",
+        price: "",
       });
     }
   };

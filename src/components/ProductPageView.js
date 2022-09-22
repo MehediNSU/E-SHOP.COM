@@ -29,7 +29,7 @@ const ProductPageView = () => {
       <div className="productPage" style={{ marginTop: "5rem" }}>
         <input
           type="text"
-          placeholder="🔍 Search Products "
+          placeholder="🔍 Search Products"
           className="search-input"
           style={{ width: "40rem" }}
           onChange={(e) => {

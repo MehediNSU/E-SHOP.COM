@@ -51,7 +51,7 @@ const AddOrder = () => {
               contact: "",
               status: "",
               productName: "",
-              total: 0,
+              total: "",
             });
           }
           return item;
@@ -69,7 +69,7 @@ const AddOrder = () => {
         contact: "",
         status: "",
         productName: "",
-        total: 0,
+        total: "",
       });
     }
   };
@@ -79,7 +79,7 @@ const AddOrder = () => {
       contact: "",
       status: "",
       productName: "",
-      total: 0,
+      total: "",
     });
     return navigate("/orders");
   };
@@ -147,7 +147,7 @@ const AddOrder = () => {
       </div>
       <div className="addProductDiv">
         <label for="total" className="">
-          Total (Tk)
+          Total (Tk.)
         </label>
         <input
           type="number"

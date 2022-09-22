@@ -12,7 +12,6 @@ const OrderEditDelete = ({ item }) => {
   const navigate = useNavigate();
 
   const editItem = () => {
-    // const editItem = list.find((item) => item.id === id );
     setIsEditing(true);
     setEditId(orderId);
     setOrder({ ...item, orderId: orderId });
