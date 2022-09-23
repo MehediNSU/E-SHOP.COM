@@ -1,19 +1,18 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ProductEditDelete from "./ProductEditDelete";
 
 import { userContext } from "../App";
-import ProductEditDelete from "./ProductEditDelete";
 import Navbar from "./Navbar";
 
 const ProductPageView = () => {
-  const {
-    authorized,
-    searchItem,
-    setSearchItem,
-    productColName,
-    productsList,
-  } = useContext(userContext);
+  const { authorized, searchItem, setSearchItem, productColName } =
+    useContext(userContext);
   const navigate = useNavigate();
+  const productsList = useSelector(
+    (state) => state.productReducer.productsList
+  );
 
   if (authorized === false) {
     return navigate("/login");

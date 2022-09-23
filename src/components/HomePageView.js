@@ -1,13 +1,16 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import { userContext } from "../App";
 import Navbar from "./Navbar";
+import { userContext } from "../App";
 
 const HomePageView = () => {
-  const { authorized, productColName, orderColName, productsList, ordersList } =
-    useContext(userContext);
-
+  const { authorized, productColName, orderColName } = useContext(userContext);
+  const productsList = useSelector(
+    (state) => state.productReducer.productsList
+  );
+  const ordersList = useSelector((state) => state.orderReducer.ordersList);
   if (authorized === false) {
     return <Navigate to="/login" />;
   }

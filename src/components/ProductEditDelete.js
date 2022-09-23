@@ -1,19 +1,20 @@
 import { useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteProduct } from "../redux/Action.js";
 
 import { userContext } from "../App";
 
 const ProductEditDelete = ({ item }) => {
-  const { productsList, setProductsList, setProduct, setIsEditing, setEditId } =
-    useContext(userContext);
+  const { setProduct, setIsEditing } = useContext(userContext);
 
   const { productId, name, category, arrivalDate, inStock, price } = item;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const editItem = () => {
     setIsEditing(true);
-    setEditId(productId);
     setProduct({ ...item, productId: productId });
     setProduct({ ...item, name: name });
     setProduct({ ...item, category: category });
@@ -25,9 +26,7 @@ const ProductEditDelete = ({ item }) => {
   };
 
   const removeItem = () => {
-    setProductsList(
-      productsList.filter((item) => item.productId !== productId)
-    );
+    dispatch(deleteProduct(productId));
   };
 
   return (

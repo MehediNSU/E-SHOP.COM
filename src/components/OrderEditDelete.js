@@ -1,19 +1,20 @@
 import { useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteOrder } from "../redux/Action.js";
 
 import { userContext } from "../App";
 
 const OrderEditDelete = ({ item }) => {
-  const { ordersList, setOrdersList, setOrder, setIsEditing, setEditId } =
-    useContext(userContext);
+  const { setOrder, setIsEditing } = useContext(userContext);
 
   const { orderId, customerName, contact, status, productName, total } = item;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const editItem = () => {
     setIsEditing(true);
-    setEditId(orderId);
     setOrder({ ...item, orderId: orderId });
     setOrder({ ...item, customerName: customerName });
     setOrder({ ...item, contact: contact });
@@ -25,7 +26,7 @@ const OrderEditDelete = ({ item }) => {
   };
 
   const removeItem = () => {
-    setOrdersList(ordersList.filter((item) => item.orderId !== orderId));
+    dispatch(deleteOrder(orderId));
   };
 
   return (

@@ -1,14 +1,17 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { userContext } from "../App";
 import Navbar from "./Navbar";
+
 import OrderEditDelete from "./OrderEditDelete";
 
 const OrderPageView = () => {
-  const { authorized, searchItem, setSearchItem, orderColName, ordersList } =
+  const { authorized, searchItem, setSearchItem, orderColName } =
     useContext(userContext);
   const navigate = useNavigate();
+  const ordersList = useSelector((state) => state.orderReducer.ordersList);
 
   if (authorized === false) {
     return navigate("/login");
