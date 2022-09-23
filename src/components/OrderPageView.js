@@ -24,7 +24,7 @@ const OrderPageView = () => {
       <div className="productPage" style={{ marginTop: "5rem" }}>
         <input
           type="text"
-          placeholder="🔍 Search Products"
+          placeholder="🔍 Search Orders"
           className="search-input"
           style={{ width: "40rem" }}
           onChange={(e) => {
