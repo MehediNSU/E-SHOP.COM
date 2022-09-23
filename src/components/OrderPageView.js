@@ -62,9 +62,12 @@ const OrderPageView = () => {
               return (
                 <tbody>
                   <tr>
-                    {Object.values(item).map((obj, index) => {
-                      return <td key={index}>{obj}</td>;
-                    })}
+                    <td key={0}>{item.orderId}</td>
+                    <td key={1}>{item.customerName}</td>
+                    <td key={2}>{item.contact}</td>
+                    <td key={3}>{item.status}</td>
+                    <td key={4}>{item.productName}</td>
+                    <td key={5}>{item.total}</td>
                     <td>
                       <OrderEditDelete item={item} />
                     </td>

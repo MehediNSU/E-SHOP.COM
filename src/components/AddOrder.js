@@ -59,6 +59,7 @@ const AddOrder = () => {
       );
       setEditId(null);
       setIsEditing(false);
+      return navigate("/orders");
     } else {
       setCountOrderId(countOrderId + 1);
       order = { ...order, orderId: countOrderId };
@@ -71,6 +72,7 @@ const AddOrder = () => {
         productName: "",
         total: "",
       });
+      return navigate("/orders");
     }
   };
   const onCancelHandler = () => {
@@ -125,7 +127,7 @@ const AddOrder = () => {
           onChange={onChangeHandler}
         >
           <option value="">Select Status</option>
-          <option value="Prending">Pending</option>
+          <option value="Pending">Pending</option>
           <option value="On way">On way</option>
           <option value="Delivered">Delivered</option>
         </select>

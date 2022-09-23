@@ -36,8 +36,8 @@ function App() {
     name: "",
     category: "",
     arrivalDate: "",
-    inStock: 0,
-    price: 0,
+    inStock: "",
+    price: "",
   });
   const productColName = [
     "Product ID",
@@ -54,12 +54,12 @@ function App() {
     contact: "",
     status: "",
     productName: "",
-    total: 0,
+    total: "",
   });
   const orderColName = [
     "Order ID",
     "Customer Name",
-    "Customer Contact",
+    "Contact Number",
     "Order Status",
     "Product Name",
     "Total (Tk)",

@@ -59,10 +59,13 @@ const AddProduct = () => {
       );
       setEditId(null);
       setIsEditing(false);
+      return navigate("/products");
     } else {
       setCountProductId(countProductId + 1);
       product = { ...product, productId: countProductId };
-
+      {
+        console.log("new product", product);
+      }
       setProductsList([...productsList, product]);
       alert("Your information saved.");
       setProduct({
@@ -72,6 +75,7 @@ const AddProduct = () => {
         inStock: "",
         price: "",
       });
+      return navigate("/products");
     }
   };
   const onCancelHandler = () => {

@@ -50,6 +50,7 @@ const ProductPageView = () => {
               <th>Buttons</th>
             </tr>
           </thead>
+          {console.log("productslist", productsList)}
           {productsList
             .filter((item) => {
               if (searchItem === "") {
@@ -65,9 +66,12 @@ const ProductPageView = () => {
               return (
                 <tbody>
                   <tr>
-                    {Object.values(item).map((obj, index) => {
-                      return <td key={index}>{obj}</td>;
-                    })}
+                    <td key={0}>{item.productId}</td>
+                    <td key={1}>{item.name}</td>
+                    <td key={2}>{item.category}</td>
+                    <td key={3}>{item.arrivalDate}</td>
+                    <td key={4}>{item.inStock}</td>
+                    <td key={5}>{item.price}</td>
                     <td>
                       <ProductEditDelete item={item} />
                     </td>
