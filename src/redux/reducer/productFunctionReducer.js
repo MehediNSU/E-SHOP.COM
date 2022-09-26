@@ -50,7 +50,7 @@ const initialData = {
 const productReducer = (state = initialData, action) => {
   switch (action.type) {
     case ADD_PRODUCT:
-      const { newProduct, newId } = action.payload; //data is object
+      const { newProduct, newId } = action.payload;
       return {
         ...state,
         countId: newId,
