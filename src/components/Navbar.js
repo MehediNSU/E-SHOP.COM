@@ -1,11 +1,6 @@
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
-import { userContext } from "../App";
-
 const Navbar = () => {
-  const { isLogin } = useContext(userContext);
-
   return (
     <nav className="App-navbar">
       <NavLink to="/home" className="logo">

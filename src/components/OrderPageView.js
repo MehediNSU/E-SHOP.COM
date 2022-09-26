@@ -1,24 +1,43 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { userContext } from "../App";
 import Navbar from "./Navbar";
-
-import OrderEditDelete from "./OrderEditDelete";
+import { deleteOrder } from "../redux/reducer/orderFunctionReducer";
+import { setOrder } from "../redux/reducer/orderStateReducer";
 
 const OrderPageView = () => {
-  const { authorized, searchItem, setSearchItem, orderColName } =
-    useContext(userContext);
+  //Hooks
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const ordersList = useSelector((state) => state.orderReducer.ordersList);
+  const { setIsEditing } = useContext(userContext);
+  const orderColName = [
+    "Order ID",
+    "Customer Name",
+    "Contact Number",
+    "Order Status",
+    "Product Name",
+    "Total (Tk)",
+    "Buttons",
+  ];
+  const [searchItem, setSearchItem] = useState("");
 
-  if (authorized === false) {
-    return navigate("/login");
-  }
+  //Functions
+  const editItem = (item) => {
+    setIsEditing(true);
+    dispatch(setOrder(item));
+    return navigate("/order/edit");
+  };
+
+  const removeItem = (orderId) => {
+    dispatch(deleteOrder(ordersList, orderId));
+  };
 
   const onClickHandler = () => {
-    return navigate("/add/order");
+    return navigate("/order/add");
   };
 
   return (
@@ -45,7 +64,6 @@ const OrderPageView = () => {
               {orderColName.map((obj, index) => {
                 return <th key={index}>{obj}</th>;
               })}
-              <th>Buttons</th>
             </tr>
           </thead>
           {ordersList
@@ -61,18 +79,33 @@ const OrderPageView = () => {
               }
               return "";
             })
-            .map((item) => {
+            .map((item, index) => {
               return (
                 <tbody>
-                  <tr>
+                  <tr key={index}>
                     <td key={0}>{item.orderId}</td>
                     <td key={1}>{item.customerName}</td>
                     <td key={2}>{item.contact}</td>
                     <td key={3}>{item.status}</td>
                     <td key={4}>{item.productName}</td>
                     <td key={5}>{item.total}</td>
-                    <td>
-                      <OrderEditDelete item={item} />
+                    <td key={6}>
+                      <div style={{ flexDirection: "row" }}>
+                        <button
+                          type="button"
+                          className="editButton"
+                          onClick={() => editItem(item)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          type="button"
+                          className="deleteButton"
+                          onClick={() => removeItem(item.orderId)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

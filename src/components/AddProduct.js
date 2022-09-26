@@ -1,74 +1,69 @@
-import { useContext } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addProduct, editProduct } from "../redux/Action.js";
-
-import { userContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setProduct } from "../redux/reducer/productStateReducer";
+import {
+  addProduct,
+  editProduct,
+} from "../redux/reducer/productFunctionReducer";
 
 const AddProduct = () => {
-  const {
-    authorized,
-    setProduct,
-    countProductId,
-    setCountProductId,
-    isEditing,
-    setIsEditing,
-  } = useContext(userContext);
-  let { product } = useContext(userContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { name, arrivalDate, inStock, price } = product;
+  const location = useLocation();
+  const productsList = useSelector(
+    (state) => state.productReducer.productsList
+  );
+  const product = useSelector((state) => state.productStateReducer.product);
+  const countId = useSelector((state) => state.productReducer.countId);
 
-  if (authorized === false) {
-    return navigate("/login");
-  }
+  //local state
+  const { name, arrivalDate, inStock, price } = product;
 
   const onChangeHandler = (e) => {
     const value = e.target.value;
     const name = e.target.name;
 
-    setProduct({ ...product, [name]: value });
+    dispatch(setProduct({ ...product, [name]: value }));
   };
+
   const onSaveHandler = () => {
-    if (isEditing === true) {
-      dispatch(editProduct(product));
+    if (location.pathname === "/product/edit") {
+      dispatch(editProduct(productsList, product));
       alert("Your information updated.");
-      setIsEditing(false);
-      return navigate("/products");
     } else {
-      setCountProductId(countProductId + 1);
-      product = { ...product, productId: countProductId };
-      {
-        console.log("new product", product);
-      }
-      dispatch(addProduct(product));
+      dispatch(addProduct(product, countId));
       alert("Your information saved.");
+    }
+    dispatch(
       setProduct({
         name: "",
         category: "",
         arrivalDate: "",
         inStock: "",
         price: "",
-      });
-      return navigate("/products");
-    }
+      })
+    );
+    return navigate(-1);
   };
+
   const onCancelHandler = () => {
-    setProduct({
-      name: "",
-      category: "",
-      arrivalDate: "",
-      inStock: 0,
-      price: 0,
-    });
-    return navigate("/products");
+    dispatch(
+      setProduct({
+        name: "",
+        category: "",
+        arrivalDate: "",
+        inStock: 0,
+        price: 0,
+      })
+    );
+    return navigate(-1);
   };
 
   return (
     <div className="addProduct">
       <h2 style={{ textAlign: "center" }}>Add Product Form</h2>
       <div className="addProductDiv">
-        <label for="name" className="">
+        <label htmlfor="name" className="">
           Product Name
         </label>
         <input
@@ -83,7 +78,7 @@ const AddProduct = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="category">Category</label>
+        <label htmlfor="category">Category</label>
         <select
           className="addProductInput"
           id="category"
@@ -98,7 +93,7 @@ const AddProduct = () => {
         </select>
       </div>
       <div className="addProductDiv">
-        <label for="arrivalDate" className="">
+        <label htmlfor="arrivalDate" className="">
           Arrival Date
         </label>
         <input
@@ -113,7 +108,7 @@ const AddProduct = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="inStock" className="">
+        <label htmlfor="inStock" className="">
           In Stock (Qty.)
         </label>
         <input
@@ -128,7 +123,7 @@ const AddProduct = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="price" className="">
+        <label htmlfor="price" className="">
           Price
         </label>
         <input

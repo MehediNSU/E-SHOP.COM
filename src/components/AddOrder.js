@@ -1,71 +1,63 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addOrder, editOrder } from "../redux/Action.js";
-
-import { userContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { addOrder, editOrder } from "../redux/reducer/orderFunctionReducer";
+import { setOrder } from "../redux/reducer/orderStateReducer";
 
 const AddOrder = () => {
-  const {
-    authorized,
-    setOrder,
-    isEditing,
-    setIsEditing,
-    countOrderId,
-    setCountOrderId,
-  } = useContext(userContext);
-  let { order } = useContext(userContext);
+  //Hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const ordersList = useSelector((state) => state.orderReducer.ordersList);
+  const order = useSelector((state) => state.orderStateReducer.order);
+  const countId = useSelector((state) => state.orderReducer.countId);
   const { customerName, contact, productName, total } = order;
 
-  if (authorized === false) {
-    return navigate("/login");
-  }
-
+  //Functions
   const onChangeHandler = (e) => {
     const value = e.target.value;
     const name = e.target.name;
 
-    setOrder({ ...order, [name]: value });
+    dispatch(setOrder({ ...order, [name]: value }));
   };
   const onSaveHandler = () => {
-    if (isEditing === true) {
-      dispatch(editOrder(order));
+    if (location.pathname === "/order/edit") {
+      dispatch(editOrder(ordersList, order));
       alert("Your information updated.");
-      setIsEditing(false);
       return navigate("/orders");
     } else {
-      setCountOrderId(countOrderId + 1);
-      order = { ...order, orderId: countOrderId };
-      dispatch(addOrder(order));
+      dispatch(addOrder(order, countId));
       alert("Your information saved.");
+    }
+    dispatch(
       setOrder({
         customerName: "",
         contact: "",
         status: "",
         productName: "",
         total: "",
-      });
-      return navigate("/orders");
-    }
+      })
+    );
+    return navigate(-1);
   };
   const onCancelHandler = () => {
-    setOrder({
-      customerName: "",
-      contact: "",
-      status: "",
-      productName: "",
-      total: "",
-    });
-    return navigate("/orders");
+    dispatch(
+      setOrder({
+        customerName: "",
+        contact: "",
+        status: "",
+        productName: "",
+        total: 0,
+      })
+    );
+    return navigate(-1);
   };
 
   return (
     <div className="addProduct">
       <h2 style={{ textAlign: "center" }}>Add Order Form</h2>
       <div className="addProductDiv">
-        <label for="customerName" className="">
+        <label htmlFor="customerName" className="">
           Customer Name
         </label>
         <input
@@ -79,7 +71,7 @@ const AddOrder = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="contact" className="">
+        <label htmlfor="contact" className="">
           Contact Number
         </label>
         <input
@@ -94,7 +86,7 @@ const AddOrder = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="status">Order Status</label>
+        <label htmlfor="status">Order Status</label>
         <select
           className="addProductInput"
           id="status"
@@ -108,7 +100,7 @@ const AddOrder = () => {
         </select>
       </div>
       <div className="addProductDiv">
-        <label for="productName" className="">
+        <label htmlfor="productName" className="">
           Product Name
         </label>
         <input
@@ -123,7 +115,7 @@ const AddOrder = () => {
         />
       </div>
       <div className="addProductDiv">
-        <label for="total" className="">
+        <label htmlfor="total" className="">
           Total (Tk.)
         </label>
         <input

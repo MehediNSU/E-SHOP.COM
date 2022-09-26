@@ -1,25 +1,42 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProductEditDelete from "./ProductEditDelete";
-
-import { userContext } from "../App";
 import Navbar from "./Navbar";
 
+import { deleteProduct } from "../redux/reducer/productFunctionReducer";
+import { setProduct } from "../redux/reducer/productStateReducer";
+
 const ProductPageView = () => {
-  const { authorized, searchItem, setSearchItem, productColName } =
-    useContext(userContext);
+  //Hooks
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const productsList = useSelector(
     (state) => state.productReducer.productsList
   );
+  const productColName = [
+    { label: "Product ID", name: "productId" },
+    { label: "Product Name", name: "name" },
+    { label: "Category", name: "category" },
+    { label: "Arrival Date", name: "arrivalDate" },
+    { label: "In Stock (Qty)", name: "inStock" },
+    { label: "Price", name: "price" },
+    { label: "Buttons", name: "button" }, //this will add with Product Page View
+  ];
+  const [searchItem, setSearchItem] = useState("");
 
-  if (authorized === false) {
-    return navigate("/login");
-  }
+  //Functions
+  const editItem = (item) => {
+    dispatch(setProduct(item));
+    return navigate("/product/edit");
+  };
 
-  const onClickHandler = () => {
-    return navigate("/add/product");
+  const removeItem = (productId) => {
+    dispatch(deleteProduct(productsList, productId));
+  };
+
+  const onAddButtonHandler = () => {
+    return navigate("/product/add");
   };
 
   return (
@@ -35,7 +52,7 @@ const ProductPageView = () => {
             setSearchItem(e.target.value);
           }}
         />
-        <button className="btn" onClick={onClickHandler}>
+        <button className="btn" onClick={onAddButtonHandler}>
           Add
         </button>
       </div>
@@ -44,9 +61,11 @@ const ProductPageView = () => {
           <thead>
             <tr>
               {productColName.map((obj, index) => {
-                return <th key={index}>{obj}</th>;
+                for (var label in obj) {
+                  return <th key={index}>{obj[label]}</th>;
+                }
+                return productColName;
               })}
-              <th>Buttons</th>
             </tr>
           </thead>
           {console.log("productslist", productsList)}
@@ -61,9 +80,9 @@ const ProductPageView = () => {
               }
               return "";
             })
-            .map((item) => {
+            .map((item, index) => {
               return (
-                <tbody>
+                <tbody key={index}>
                   <tr>
                     <td key={0}>{item.productId}</td>
                     <td key={1}>{item.name}</td>
@@ -71,8 +90,23 @@ const ProductPageView = () => {
                     <td key={3}>{item.arrivalDate}</td>
                     <td key={4}>{item.inStock}</td>
                     <td key={5}>{item.price}</td>
-                    <td>
-                      <ProductEditDelete item={item} />
+                    <td key={6}>
+                      <div style={{ flexDirection: "row" }}>
+                        <button
+                          type="button"
+                          className="editButton"
+                          onClick={() => editItem(item)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          type="button"
+                          className="deleteButton"
+                          onClick={() => removeItem(item.productId)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
